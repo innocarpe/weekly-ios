@@ -9,9 +9,10 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate {
     
-    var detailViewController: DetailViewController? = nil
+    @IBOutlet weak var toolbar: UIToolbar!
+    var naviHairlineImageView: UIImageView?
     var managedObjectContext: NSManagedObjectContext? = nil
 
     override func viewDidLoad() {
@@ -21,23 +22,47 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        self.toolbar.delegate = self;
+//        self.toolbar.clipsToBounds = true
+        
+        // find the hairline below the navigationBar
+        let naviBarWidth = self.navigationController?.navigationBar.frame.size.width
+        for naviSubView in self.navigationController!.navigationBar.subviews {
+            for subView in naviSubView.subviews {
+                let subViewWidth = subView.bounds.size.width
+                let subViewHeight = subView.bounds.size.height
+                if subView.isKindOfClass(UIImageView) && subViewWidth == naviBarWidth && subViewHeight < 2 {
+                    self.naviHairlineImageView = subView as? UIImageView
+                }
+            }
         }
+        
+        /*
+        for (UIView *aView in self.navigationController.navigationBar.subviews) {
+            for (UIView *bView in aView.subviews) {
+                if ([bView isKindOfClass:[UIImageView class]] &&
+                    bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
+                    bView.bounds.size.height < 2) {
+                        self.navHairline = (UIImageView *)bView;
+                }
+            }
+        }
+        */
     }
 
     override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+//        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        self.naviHairlineImageView?.hidden = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.naviHairlineImageView?.hidden = false
     }
 
     func insertNewObject(sender: AnyObject) {
+        /*
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
         let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context)
@@ -55,10 +80,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             //print("Unresolved error \(error), \(error.userInfo)")
             abort()
         }
+        */
     }
 
     // MARK: - Segues
 
+    /*
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
@@ -70,9 +97,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         }
     }
+    */
 
+    // MARK: - Toolbar
+    
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .Top
+    }
+    
     // MARK: - Table View
 
+    /*
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.fetchedResultsController.sections?.count ?? 0
     }
@@ -109,6 +144,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
 
+    */
+    
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
         cell.textLabel!.text = object.valueForKey("timeStamp")!.description
@@ -153,6 +190,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }    
     var _fetchedResultsController: NSFetchedResultsController? = nil
 
+    /*
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
     }
@@ -185,6 +223,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }
+    */
 
     /*
      // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
