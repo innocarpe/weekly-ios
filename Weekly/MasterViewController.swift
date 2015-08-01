@@ -349,22 +349,29 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         return true
     }
     
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if(editingStyle == .Delete) {
-//            // Find the LogItem object the user is trying to delete
-//            let logItemToDelete = todoPoints[indexPath.row]
-//            
-//            // Delete it from the managedObjectContext
-//            managedObjectContext.deleteObject(logItemToDelete)
-//            
-//            // Refresh the table view to indicate that it's deleted
-//            self.fetchLog()
-//            
-//            // Tell the table view to animate out thar row
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-////            save()
-//        }
-//    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if(editingStyle == .Delete) {
+            
+            var itemToDelete : TodoPoint
+            
+            if indexPath.section == 0 {
+                itemToDelete = visionTodoPoints[indexPath.row]
+                managedObjectContext.deleteObject(itemToDelete)
+                fetchVisionTodoPoint()
+            } else if indexPath.section == 1 {
+                itemToDelete = weeklyTodoPoints[indexPath.row]
+                managedObjectContext.deleteObject(itemToDelete)
+                fetchWeeklyTodoPoint()
+            } else  {
+                itemToDelete = dailyTodoPoints[indexPath.row]
+                managedObjectContext.deleteObject(itemToDelete)
+                fetchDailyTodoPoint()
+            }
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//            save()
+        }
+    }
     
     // MARK: - ViewController Cycle
     
