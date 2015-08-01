@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="14E46" minimumToolsVersion="Automatic">
-    <entity name="DateTodoPoint" parentEntity="TodoPoint" syncable="YES">
+    <entity name="DateTodoPoint" representedClassName=".DateTodoPoint" parentEntity="TodoPoint" syncable="YES">
         <attribute name="dateType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="weekNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
@@ -10,7 +10,7 @@
         </attribute>
         <userInfo/>
     </entity>
-    <entity name="TodoPoint" syncable="YES">
+    <entity name="TodoPoint" representedClassName=".TodoPoint" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="modifiedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
