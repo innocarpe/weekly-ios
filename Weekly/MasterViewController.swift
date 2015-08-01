@@ -20,12 +20,20 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var tableView: UITableView!
     
     var managedObjectContext: NSManagedObjectContext? = nil
+    
+    var selectedYear: Int = 0
+    var selectedWeekOfYear: Int = 0
+    var selectedWeekdayIndex: Int = 0 // 1 = Sunday, 7 = Saturday 에서 -1 처리함
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
+        // Model
+        initDate()
+        
+        // UI
         initAddButton()
         initToolbar()
         initNavigationBar()
@@ -34,6 +42,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initTableView()
     }
     
+    func initDate() {
+        // 오늘 날짜를 구해 요일 번호를 구한다
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .WeekOfYear, .Weekday], fromDate: NSDate())
+        selectedYear = components.year
+        selectedWeekOfYear = components.weekOfYear
+        selectedWeekdayIndex = components.weekday - 1
+    }
+
     func initAddButton() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
@@ -131,12 +148,17 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             make.top.equalTo(dayOfWeekLabels[0].snp_bottom)
             make.leading.trailing.equalTo(self.view)
             make.height.equalTo(dayOfWeekLabels[0].snp_width)
+            
+//            swipeView.currentItemIndex = 3
         }
 
         // toolbar 아래쪽을 SwipeView 아래쪽과 맞춤(높이 조정)
         toolbar.snp_makeConstraints { (make) -> Void in
             make.bottom.equalTo(swipeView.snp_bottom)
         }
+        
+        // 5페이지 중 중앙에 오게 설정
+//        swipeView.scrollToItemAtIndex(3, duration: 0)
         
         // TODO: UI test
 //        swipeView.backgroundColor = RandomColorUtil.get()
@@ -184,6 +206,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 dayLabel.textAlignment = .Center;
                 dayLabel.text = "31"
                 dayLabel.font = UIFont.systemFontOfSize(17)
+                dayLabel.tag = index
                 
                 rootView.addSubview(dayLabel)
                 dayLabels.append(dayLabel)
@@ -201,12 +224,35 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                     }
                 }
                 
+                // TODO: circle test
+                if index == selectedWeekdayIndex {
+                    dayLabel.layer.masksToBounds = true
+                    dayLabel.layer.cornerRadius = labelWidth / 2
+                    dayLabel.layer.borderWidth = 7.0;
+                    dayLabel.layer.borderColor = UIColor.clearColor().CGColor
+                    dayLabel.backgroundColor = UIColor.blackColor()
+                    dayLabel.textColor = UIColor.whiteColor()
+                }
+                
+                // recognizer는 한 뷰에만 적용 가능해서 동적으로 생성
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: "dayLabelTouchBegan:")
+                dayLabel.userInteractionEnabled = true
+                dayLabel.addGestureRecognizer(tapRecognizer)
+                
                 // TODO: UI test
 //                dayLabel.backgroundColor = RandomColorUtil.get()
             }
             return rootView
         } else {
             return view
+        }
+    }
+    
+    func dayLabelTouchBegan(recognizer: UIGestureRecognizer) {
+        if recognizer.state == UIGestureRecognizerState.Ended {
+            let dayLabel: UILabel = recognizer.view as! UILabel
+            selectedWeekdayIndex = dayLabel.tag
+            swipeView.reloadData()
         }
     }
     
