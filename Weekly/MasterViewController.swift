@@ -51,13 +51,59 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func initDayOfWeekLabels() {
+        let screenWidth = UIScreen.mainScreen().applicationFrame.width
+        let labelWidth = screenWidth / 7;
+        
         // 디바이스 width를 7로 나누어서 일~토 까지 width를 설정해주고, horizontal로 붙인다.
-        let box = UIView()
-        self.view.addSubview(box)
-        box.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(self.view).inset(UIEdgeInsetsMake(20, 20, 20, 20))
+        var dayOfWeekLabels = [UILabel]();
+        
+        for index in 0...6 {
+            let dayOfWeekLabel = UILabel()
+            dayOfWeekLabel.numberOfLines = 1
+            dayOfWeekLabel.textAlignment = .Center;
+            dayOfWeekLabel.text = getDayOfWeekString(index)
+            dayOfWeekLabel.font = UIFont.systemFontOfSize(11)
+            
+            dayOfWeekLabel.backgroundColor = RandomColorUtil.get()
+            
+            self.view.addSubview(dayOfWeekLabel)
+            dayOfWeekLabels.append(dayOfWeekLabel)
+            
+            dayOfWeekLabel.snp_makeConstraints { (make) -> Void in
+                make.top.equalTo(toolbar)
+                make.width.equalTo(labelWidth)
+                make.height.equalTo(labelWidth / 3)
+                
+                if index == 0 {
+                    make.left.equalTo(self.view)
+                } else if index == 6 {
+                    make.right.equalTo(self.view)
+                } else {
+                    make.left.equalTo(dayOfWeekLabels[index-1].snp_right)
+                }
+            }
         }
-        box.backgroundColor = RandomColorUtil.get()
+    }
+    
+    func getDayOfWeekString(index: Int) -> String {
+        switch index {
+        case 0:
+            return "일"
+        case 1:
+            return "월"
+        case 2:
+            return "화"
+        case 3:
+            return "수"
+        case 4:
+            return "목"
+        case 5:
+            return "금"
+        case 6:
+            return "토"
+        default:
+            return ""
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
