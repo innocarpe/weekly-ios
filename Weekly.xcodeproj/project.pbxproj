@@ -17,6 +17,7 @@
 		F2F6AE351B6B8ED300162EF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F6AE331B6B8ED300162EF7 /* LaunchScreen.storyboard */; };
 		F2F6AE401B6B8ED300162EF7 /* WeeklyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE3F1B6B8ED300162EF7 /* WeeklyTests.swift */; };
 		F2F6AE4B1B6B8ED300162EF7 /* WeeklyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE4A1B6B8ED300162EF7 /* WeeklyUITests.swift */; };
+		F2F6AE901B6C861C00162EF7 /* SnapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = F2F6AE871B6C855E00162EF7 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +35,56 @@
 			remoteGlobalIDString = F2F6AE211B6B8ED300162EF7;
 			remoteInfo = Weekly;
 		};
+		F2F6AE861B6C855E00162EF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EEBCC9D819CC627D0083B827;
+			remoteInfo = "SnapKit iOS";
+		};
+		F2F6AE881B6C855E00162EF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EECDB37A1AC0C9D4006BBC11;
+			remoteInfo = "SnapKit OSX";
+		};
+		F2F6AE8A1B6C855E00162EF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EEBCC9E219CC627E0083B827;
+			remoteInfo = "SnapKit iOS Tests";
+		};
+		F2F6AE8C1B6C855E00162EF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EECDB3841AC0C9D4006BBC11;
+			remoteInfo = "SnapKit OSX Tests";
+		};
+		F2F6AE8E1B6C857700162EF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EEBCC9D719CC627D0083B827;
+			remoteInfo = "SnapKit iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F2F6AE7D1B6C822D00162EF7 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F2F6AE901B6C861C00162EF7 /* SnapKit.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3968064C954742F41D04A13E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +106,7 @@
 		F2F6AE4A1B6B8ED300162EF7 /* WeeklyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyUITests.swift; sourceTree = "<group>"; };
 		F2F6AE4C1B6B8ED300162EF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F6AE581B6B9A7800162EF7 /* Weekly-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Weekly-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SnapKit.xcodeproj; path = SnapKit/SnapKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +168,7 @@
 		F2F6AE241B6B8ED300162EF7 /* Weekly */ = {
 			isa = PBXGroup;
 			children = (
+				F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */,
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
@@ -148,6 +200,17 @@
 			path = WeeklyUITests;
 			sourceTree = "<group>";
 		};
+		F2F6AE801B6C855E00162EF7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2F6AE871B6C855E00162EF7 /* SnapKit.framework */,
+				F2F6AE891B6C855E00162EF7 /* SnapKit.framework */,
+				F2F6AE8B1B6C855E00162EF7 /* SnapKit iOS Tests.xctest */,
+				F2F6AE8D1B6C855E00162EF7 /* SnapKit OSX Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F6FFCF52A1179EB17A628EBF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,10 +232,12 @@
 				F2F6AE1F1B6B8ED300162EF7 /* Frameworks */,
 				F2F6AE201B6B8ED300162EF7 /* Resources */,
 				F86751F19F6DF227D4AF5142 /* Copy Pods Resources */,
+				F2F6AE7D1B6C822D00162EF7 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F2F6AE8F1B6C857700162EF7 /* PBXTargetDependency */,
 			);
 			name = Weekly;
 			productName = Weekly;
@@ -249,6 +314,12 @@
 			mainGroup = F2F6AE191B6B8ED300162EF7;
 			productRefGroup = F2F6AE231B6B8ED300162EF7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F2F6AE801B6C855E00162EF7 /* Products */;
+					ProjectRef = F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F2F6AE211B6B8ED300162EF7 /* Weekly */,
@@ -257,6 +328,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F2F6AE871B6C855E00162EF7 /* SnapKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SnapKit.framework;
+			remoteRef = F2F6AE861B6C855E00162EF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F2F6AE891B6C855E00162EF7 /* SnapKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SnapKit.framework;
+			remoteRef = F2F6AE881B6C855E00162EF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F2F6AE8B1B6C855E00162EF7 /* SnapKit iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SnapKit iOS Tests.xctest";
+			remoteRef = F2F6AE8A1B6C855E00162EF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F2F6AE8D1B6C855E00162EF7 /* SnapKit OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SnapKit OSX Tests.xctest";
+			remoteRef = F2F6AE8C1B6C855E00162EF7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F2F6AE201B6B8ED300162EF7 /* Resources */ = {
@@ -358,6 +460,11 @@
 			isa = PBXTargetDependency;
 			target = F2F6AE211B6B8ED300162EF7 /* Weekly */;
 			targetProxy = F2F6AE471B6B8ED300162EF7 /* PBXContainerItemProxy */;
+		};
+		F2F6AE8F1B6C857700162EF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SnapKit iOS";
+			targetProxy = F2F6AE8E1B6C857700162EF7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
