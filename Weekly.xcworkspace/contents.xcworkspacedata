@@ -2,18 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Weekly/DateTodoPoint+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Weekly/DateTodoPoint.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Weekly/TodoPoint+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Weekly/TodoPoint.swift">
-   </FileRef>
-   <FileRef
       location = "group:Weekly.xcodeproj">
    </FileRef>
    <FileRef

@@ -19,7 +19,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var swipeView: SwipeView!
     var tableView: UITableView!
     
-    var managedObjectContext: NSManagedObjectContext? = nil
+    var visionTodoPoints = [TodoPoint]()
+    var dailyTodoPoints = [TodoPoint]()
+    var weeklyTodoPoints = [TodoPoint]()
+    
+    var managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initNavigationBar()
         initDayOfWeekLabels()
         initSwipeView()
+        
+        // 나중에 지워야할 더미 데이터
+        addDummys()
         initTableView()
     }
     
@@ -144,6 +151,22 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 //        swipeView.backgroundColor = UIColor.clearColor()
     }
     
+    func addDummys() {
+        let items = [
+            ("(Vision) Point", "Dog", 10, 0, 0),
+            ("(Weekly) Best Language", "Swift", 10, 0, 1),
+            ("(Weekly) Worst Animal", "Cthulu", 10, 0, 1),
+            ("(Daily) Worst Language", "LOLCODE", 10, 0, 2),
+            ("(Daily) Language", "LOLCODE", 10, 0, 2),
+            ("(Daily) Language", "LOLCODE", 10, 0, 2),
+            ("(Daily) Language", "LOLCODE", 10, 0, 2)
+        ]
+        
+        for(itemTitle, itemNote, weekNumber, priority, type) in items {
+            TodoPoint.createInManagedObjectContext(managedObjectContext, title: itemTitle, note: itemNote, weekNumber: weekNumber, priority: priority, type:type)
+        }
+    }
+    
     func initTableView() {
         tableView = UITableView()
         self.view.addSubview(tableView)
@@ -152,8 +175,68 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             make.top.equalTo(toolbar.snp_bottom)
             make.bottom.equalTo((self.bottomLayoutGuide as AnyObject as! UIView).snp_top)
         }
+        
+        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TodoPoint")
         tableView.dataSource = self
         tableView.delegate = self
+        
+        fetchVisionTodoPoint()
+        fetchWeeklyTodoPoint()
+        fetchDailyTodoPoint()
+    }
+    
+    func fetchVisionTodoPoint() {
+        let fetchRequest = NSFetchRequest(entityName: "TodoPoint")
+        
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "type == %i", 0)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let fetchResults = try managedObjectContext.executeFetchRequest(fetchRequest) as? [TodoPoint] {
+                visionTodoPoints = fetchResults
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchWeeklyTodoPoint() {
+        let fetchRequest = NSFetchRequest(entityName: "TodoPoint")
+        
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "type == %i", 1)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let fetchResults = try managedObjectContext.executeFetchRequest(fetchRequest) as? [TodoPoint] {
+                weeklyTodoPoints = fetchResults
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchDailyTodoPoint() {
+        let fetchRequest = NSFetchRequest(entityName: "TodoPoint")
+        
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "type == %i", 2)
+        fetchRequest.predicate = predicate
+        
+        do {
+            if let fetchResults = try managedObjectContext.executeFetchRequest(fetchRequest) as? [TodoPoint] {
+                dailyTodoPoints = fetchResults
+            }
+        } catch {
+            print(error)
+        }
     }
     
     // MARK: - SwipeView delegate
@@ -196,12 +279,55 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        if section == 0 {
+            return visionTodoPoints.count
+        } else if section == 1 {
+            return weeklyTodoPoints.count
+        } else {
+            return dailyTodoPoints.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("TodoPoint")
+        
+        
+        // Get the LogItem for this index
+        var todoPointItem : TodoPoint
+        
+        if indexPath.section == 0 {
+            todoPointItem = visionTodoPoints[indexPath.row]
+        } else if indexPath.section == 1 {
+            todoPointItem = weeklyTodoPoints[indexPath.row]
+        } else  {
+            todoPointItem = dailyTodoPoints[indexPath.row]
+        }
+        
+        // Set the title of the cell to be the title of the logItem
+        cell!.textLabel?.text = todoPointItem.title
+        return cell!
     }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if(editingStyle == .Delete) {
+//            // Find the LogItem object the user is trying to delete
+//            let logItemToDelete = todoPoints[indexPath.row]
+//            
+//            // Delete it from the managedObjectContext
+//            managedObjectContext.deleteObject(logItemToDelete)
+//            
+//            // Refresh the table view to indicate that it's deleted
+//            self.fetchLog()
+//            
+//            // Tell the table view to animate out thar row
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+////            save()
+//        }
+//    }
     
     // MARK: - ViewController Cycle
     
@@ -317,7 +443,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         let fetchRequest = NSFetchRequest()
         // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: self.managedObjectContext!)
+        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
@@ -330,7 +456,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: "Master")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         

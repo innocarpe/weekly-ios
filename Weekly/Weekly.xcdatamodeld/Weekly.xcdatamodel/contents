@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8166.2" systemVersion="14E46" minimumToolsVersion="Automatic">
-    <entity name="DateTodoPoint" representedClassName=".DateTodoPoint" parentEntity="TodoPoint" syncable="YES">
-        <attribute name="dateType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="weekNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-    </entity>
     <entity name="Event">
         <attribute name="timeStamp" optional="YES" attributeType="Date">
             <userInfo/>
@@ -17,10 +13,11 @@
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="weekNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
         <element name="Event" positionX="261" positionY="189" width="128" height="58"/>
-        <element name="TodoPoint" positionX="439" positionY="243" width="128" height="133"/>
-        <element name="DateTodoPoint" positionX="387" positionY="468" width="135" height="43"/>
+        <element name="TodoPoint" positionX="439" positionY="243" width="128" height="163"/>
     </elements>
 </model>
