@@ -146,6 +146,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func initTableView() {
         tableView = UITableView()
         self.view.addSubview(tableView)
+        self.view.sendSubviewToBack(tableView)
         tableView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(toolbar.snp_bottom)
             make.leading.trailing.equalTo(self.view)
@@ -163,7 +164,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     */
     
     // MARK: - SwipeView data source
-    
     func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
         return 5
     }
@@ -183,14 +183,14 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 dayLabel.numberOfLines = 1
                 dayLabel.textAlignment = .Center;
                 dayLabel.text = "31"
-                dayLabel.font = UIFont.systemFontOfSize(15)
+                dayLabel.font = UIFont.systemFontOfSize(17)
                 
                 rootView.addSubview(dayLabel)
                 dayLabels.append(dayLabel)
                 
                 dayLabel.snp_makeConstraints { (make) -> Void in
                     make.top.bottom.equalTo(rootView)
-                    make.width.height.equalTo(labelWidth)
+                    make.width.equalTo(labelWidth)
                     
                     if index == 0 {
                         make.leading.equalTo(rootView)
@@ -202,7 +202,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 }
                 
                 // TODO: UI test
-                dayLabel.backgroundColor = RandomColorUtil.get()
+//                dayLabel.backgroundColor = RandomColorUtil.get()
             }
             return rootView
         } else {
