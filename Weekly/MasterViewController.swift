@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SnapKit
 
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate {
     
@@ -20,12 +21,23 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        self.navigationItem.rightBarButtonItem = addButton
+        initAddButton()
+        
         self.toolbar.delegate = self;
 //        self.toolbar.clipsToBounds = true
         
-        // find the hairline below the navigationBar
+        initNavigationBar()
+        initDayOfWeekLabels()
+        
+    }
+
+    func initAddButton() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        self.navigationItem.rightBarButtonItem = addButton
+    }
+    
+    func initNavigationBar() {
+        // 네비게이션 바 아래쪽 툴바를 붙이기에, 네비바 아래쪽 줄을 안보이게 해서 툴바와 같은 뷰처럼 보이게 처리
         let naviBarWidth = self.navigationController?.navigationBar.frame.size.width
         for naviSubView in self.navigationController!.navigationBar.subviews {
             for subView in naviSubView.subviews {
@@ -36,20 +48,18 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 }
             }
         }
-        
-        /*
-        for (UIView *aView in self.navigationController.navigationBar.subviews) {
-            for (UIView *bView in aView.subviews) {
-                if ([bView isKindOfClass:[UIImageView class]] &&
-                    bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
-                    bView.bounds.size.height < 2) {
-                        self.navHairline = (UIImageView *)bView;
-                }
-            }
-        }
-        */
     }
-
+    
+    func initDayOfWeekLabels() {
+        // 디바이스 width를 7로 나누어서 일~토 까지 width를 설정해주고, horizontal로 붙인다.
+        let box = UIView()
+        self.view.addSubview(box)
+        box.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(self.view).inset(UIEdgeInsetsMake(20, 20, 20, 20))
+        }
+        box.backgroundColor = RandomColorUtil.get()
+    }
+    
     override func viewWillAppear(animated: Bool) {
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
