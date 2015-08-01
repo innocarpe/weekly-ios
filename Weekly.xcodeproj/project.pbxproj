@@ -148,6 +148,7 @@
 		F2F6AE191B6B8ED300162EF7 = {
 			isa = PBXGroup;
 			children = (
+				F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */,
 				F2F6AE241B6B8ED300162EF7 /* Weekly */,
 				F2F6AE3E1B6B8ED300162EF7 /* WeeklyTests */,
 				F2F6AE491B6B8ED300162EF7 /* WeeklyUITests */,
@@ -170,7 +171,6 @@
 		F2F6AE241B6B8ED300162EF7 /* Weekly */ = {
 			isa = PBXGroup;
 			children = (
-				F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */,
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
@@ -599,6 +599,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Weekly/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -616,6 +617,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Weekly/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
