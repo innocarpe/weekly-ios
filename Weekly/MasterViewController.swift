@@ -10,10 +10,13 @@ import UIKit
 import CoreData
 import SnapKit
 
-class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate {
+class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
+    SwipeViewDelegate{
     
     @IBOutlet weak var toolbar: UIToolbar!
     var naviHairlineImageView: UIImageView?
+    var swipeView: SwipeView!
+    
     var managedObjectContext: NSManagedObjectContext? = nil
 
     override func viewDidLoad() {
@@ -28,7 +31,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         initNavigationBar()
         initDayOfWeekLabels()
-        
+        initSwipeView()
     }
 
     func initAddButton() {
@@ -106,6 +109,31 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
     }
     
+    func initSwipeView() {
+        swipeView = SwipeView()
+        swipeView.delegate = self
+        swipeView.dataSource = self
+        swipeView.pagingEnabled = true;
+    }
+    
+    // MARK: - SwipeView delegate
+    
+    func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
+        return CGSizeMake(UIScreen.mainScreen().applicationFrame.width, 50)
+    }
+    
+    // MARK: - SwipeView data source
+    
+    func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
+        return 1
+    }
+    
+    func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
+        return UIView()
+    }
+    
+    // MARK: - ViewController Cycle
+    
     override func viewWillAppear(animated: Bool) {
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
@@ -116,6 +144,8 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.viewDidDisappear(animated)
         self.naviHairlineImageView?.hidden = false
     }
+    
+    // MARK:
 
     func insertNewObject(sender: AnyObject) {
         /*

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DD91281B6CAEAD005350BB /* SwipeView.m */; };
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
 		F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */; };
@@ -91,6 +92,8 @@
 		605EFCF5122249881C4036D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AA421D99AB6921EA61B422CB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D99E4C73EDE36443666C811C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2DD91271B6CAEAD005350BB /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
+		F2DD91281B6CAEAD005350BB /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		F2F6AE221B6B8ED300162EF7 /* Weekly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F6AE281B6B8ED300162EF7 /* Weekly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weekly.xcdatamodel; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 		F2F6AE241B6B8ED300162EF7 /* Weekly */ = {
 			isa = PBXGroup;
 			children = (
+				F2DD91271B6CAEAD005350BB /* SwipeView.h */,
+				F2DD91281B6CAEAD005350BB /* SwipeView.m */,
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
@@ -448,6 +453,7 @@
 				F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */,
 				F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */,
 				F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */,
+				F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */,
 				F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */,
 				F2F6AE2D1B6B8ED300162EF7 /* DetailViewController.swift in Sources */,
 			);
