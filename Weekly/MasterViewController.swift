@@ -111,15 +111,14 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 
                 if index == 0 {
                     make.leading.equalTo(self.view)
+                    dayOfWeekLabel.textColor = UIColor.grayColor()
                 } else if index == 6 {
                     make.trailing.equalTo(self.view)
+                    dayOfWeekLabel.textColor = UIColor.grayColor()
                 } else {
                     make.left.equalTo(dayOfWeekLabels[index-1].snp_right)
                 }
             }
-            
-            // TODO: UI test
-            dayOfWeekLabel.backgroundColor = RandomColorUtil.get()
         }
     }
     
@@ -300,8 +299,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                     
                     if index == 0 {
                         make.leading.equalTo(rootView)
+                        dayLabel.textColor = UIColor.grayColor()
                     } else if index == 6 {
                         make.trailing.equalTo(rootView)
+                        dayLabel.textColor = UIColor.grayColor()
                     } else {
                         make.left.equalTo(dayLabels[index-1].snp_right)
                     }
