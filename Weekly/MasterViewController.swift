@@ -11,11 +11,13 @@ import CoreData
 import SnapKit
 
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
-    SwipeViewDelegate{
+    SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var toolbar: UIToolbar!
+    var toolbar: UIToolbar!
     var naviHairlineImageView: UIImageView?
+    var dayOfWeekLabels: [UILabel]!
     var swipeView: SwipeView!
+    var tableView: UITableView!
     
     var managedObjectContext: NSManagedObjectContext? = nil
 
@@ -25,18 +27,26 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
         initAddButton()
-        
-        self.toolbar.delegate = self;
-//        self.toolbar.clipsToBounds = true
-        
+        initToolbar()
         initNavigationBar()
         initDayOfWeekLabels()
         initSwipeView()
+        initTableView()
     }
-
+    
     func initAddButton() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
+    }
+    
+    func initToolbar() {
+        toolbar = UIToolbar()
+        self.view.addSubview(toolbar)
+        toolbar.snp_makeConstraints { (make) -> Void in
+            make.leading.trailing.equalTo(self.view)
+            make.top.equalTo((self.topLayoutGuide as AnyObject as! UIView).snp_bottom)
+        }
+        toolbar.delegate = self;
     }
     
     func initNavigationBar() {
@@ -58,7 +68,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let labelWidth = screenWidth / 7;
         
         // 디바이스 width를 7로 나누어서 일~토 까지 width를 설정해주고, horizontal로 붙인다.
-        var dayOfWeekLabels = [UILabel]();
+        dayOfWeekLabels = [UILabel]();
         
         for index in 0...6 {
             let dayOfWeekLabel = UILabel()
@@ -66,9 +76,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             dayOfWeekLabel.textAlignment = .Center;
             dayOfWeekLabel.text = getDayOfWeekString(index)
             dayOfWeekLabel.font = UIFont.systemFontOfSize(11)
-            
-            dayOfWeekLabel.backgroundColor = RandomColorUtil.get()
-            
+
             self.view.addSubview(dayOfWeekLabel)
             dayOfWeekLabels.append(dayOfWeekLabel)
             
@@ -85,6 +93,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                     make.left.equalTo(dayOfWeekLabels[index-1].snp_right)
                 }
             }
+            
+            // TODO: UI test
+            dayOfWeekLabel.backgroundColor = RandomColorUtil.get()
         }
     }
     
@@ -114,22 +125,82 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         swipeView.delegate = self
         swipeView.dataSource = self
         swipeView.pagingEnabled = true;
+        
+        self.view.addSubview(swipeView)
+        swipeView.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(dayOfWeekLabels[0].snp_bottom)
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
+            make.height.equalTo(dayOfWeekLabels[0].snp_width)
+        }
+
+        // toolbar 아래쪽을 SwipeView 아래쪽과 맞춤(높이 조정)
+        toolbar.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(swipeView.snp_bottom)
+        }
+        
+        // TODO: UI test
+//        swipeView.backgroundColor = RandomColorUtil.get()
+//        swipeView.backgroundColor = UIColor.clearColor()
+    }
+    
+    func initTableView() {
+        tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.snp_makeConstraints { (make) -> Void in
+            make.leading.trailing.equalTo(self.view)
+            make.top.equalTo(toolbar.snp_bottom)
+            make.bottom.equalTo((self.bottomLayoutGuide as AnyObject as! UIView).snp_top)
+        }
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     // MARK: - SwipeView delegate
-    
+    /*
     func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
         return CGSizeMake(UIScreen.mainScreen().applicationFrame.width, 50)
     }
+    */
     
     // MARK: - SwipeView data source
     
     func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
-        return 1
+        return 5
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
         return UIView()
+    }
+    
+    // MARK: - TableView delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Visioning Goals"
+        } else if section == 1 {
+            return "26 Jul 2015 ~ 1 Aug 2015"
+        } else {
+            return "21 Fri."
+        }
+    }
+    
+    // MARK: - TableView data source
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return UITableViewCell()
     }
     
     // MARK: - ViewController Cycle
@@ -137,12 +208,12 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewWillAppear(animated: Bool) {
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
-        self.naviHairlineImageView?.hidden = true
+        naviHairlineImageView?.hidden = true
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        self.naviHairlineImageView?.hidden = false
+        naviHairlineImageView?.hidden = false
     }
     
     // MARK:

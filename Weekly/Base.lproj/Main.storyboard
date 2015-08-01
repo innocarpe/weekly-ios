@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Detail-->
@@ -54,26 +53,9 @@
                     <view key="view" contentMode="scaleToFill" id="jzX-M1-z9k">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bu6-hj-poH">
-                                <rect key="frame" x="0.0" y="64" width="600" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="NBX-jO-ncP"/>
-                                </constraints>
-                                <items/>
-                            </toolbar>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="bu6-hj-poH" firstAttribute="top" secondItem="Awz-ud-U8Q" secondAttribute="bottom" id="7XW-Q4-lHX"/>
-                            <constraint firstItem="bu6-hj-poH" firstAttribute="leading" secondItem="jzX-M1-z9k" secondAttribute="leadingMargin" constant="-20" id="SO8-XG-Ntt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bu6-hj-poH" secondAttribute="trailing" constant="-20" id="yKH-uG-zhg"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GfN-H2-SMT"/>
-                    <connections>
-                        <outlet property="toolbar" destination="bu6-hj-poH" id="MPf-qh-eN6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lsl-lm-v9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
