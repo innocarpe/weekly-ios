@@ -93,9 +93,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 make.height.equalTo(labelWidth / 3)
                 
                 if index == 0 {
-                    make.left.equalTo(self.view)
+                    make.leading.equalTo(self.view)
                 } else if index == 6 {
-                    make.right.equalTo(self.view)
+                    make.trailing.equalTo(self.view)
                 } else {
                     make.left.equalTo(dayOfWeekLabels[index-1].snp_right)
                 }
@@ -136,8 +136,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         self.view.addSubview(swipeView)
         swipeView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(dayOfWeekLabels[0].snp_bottom)
-            make.left.equalTo(self.view)
-            make.right.equalTo(self.view)
+            make.leading.trailing.equalTo(self.view)
             make.height.equalTo(dayOfWeekLabels[0].snp_width)
         }
 
@@ -171,8 +170,8 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.snp_makeConstraints { (make) -> Void in
-            make.leading.trailing.equalTo(self.view)
             make.top.equalTo(toolbar.snp_bottom)
+            make.leading.trailing.equalTo(self.view)
             make.bottom.equalTo((self.bottomLayoutGuide as AnyObject as! UIView).snp_top)
         }
         
@@ -253,7 +252,45 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
-        return UIView()
+        if view == nil {
+            let rootView = UIView(frame: swipeView.bounds)
+            
+            let screenWidth = UIScreen.mainScreen().applicationFrame.width
+            let labelWidth = screenWidth / 7;
+            
+            // 디바이스 width를 7로 나누어서 일~토 까지 width를 설정해주고, horizontal로 붙인다.
+            var dayLabels = [UILabel]();
+            
+            for index in 0...6 {
+                let dayLabel = UILabel()
+                dayLabel.numberOfLines = 1
+                dayLabel.textAlignment = .Center;
+                dayLabel.text = "31"
+                dayLabel.font = UIFont.systemFontOfSize(15)
+                
+                rootView.addSubview(dayLabel)
+                dayLabels.append(dayLabel)
+                
+                dayLabel.snp_makeConstraints { (make) -> Void in
+                    make.top.bottom.equalTo(rootView)
+                    make.width.height.equalTo(labelWidth)
+                    
+                    if index == 0 {
+                        make.leading.equalTo(rootView)
+                    } else if index == 6 {
+                        make.trailing.equalTo(rootView)
+                    } else {
+                        make.left.equalTo(dayLabels[index-1].snp_right)
+                    }
+                }
+                
+                // TODO: UI test
+                dayLabel.backgroundColor = RandomColorUtil.get()
+            }
+            return rootView
+        } else {
+            return view
+        }
     }
     
     // MARK: - TableView delegate
