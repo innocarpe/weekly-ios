@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E4C91CF7AEDD8259489A315E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3968064C954742F41D04A13E /* libPods.a */; };
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
 		F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */; };
@@ -18,6 +17,8 @@
 		F2F6AE401B6B8ED300162EF7 /* WeeklyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE3F1B6B8ED300162EF7 /* WeeklyTests.swift */; };
 		F2F6AE4B1B6B8ED300162EF7 /* WeeklyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE4A1B6B8ED300162EF7 /* WeeklyUITests.swift */; };
 		F2F6AE901B6C861C00162EF7 /* SnapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = F2F6AE871B6C855E00162EF7 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */; };
+		F397B3DADFC8E31ED5934C1F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99E4C73EDE36443666C811C /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,9 +88,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3968064C954742F41D04A13E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		605EFCF5122249881C4036D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AA421D99AB6921EA61B422CB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D99E4C73EDE36443666C811C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F6AE221B6B8ED300162EF7 /* Weekly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F6AE281B6B8ED300162EF7 /* Weekly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weekly.xcdatamodel; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		F2F6AE4C1B6B8ED300162EF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F6AE581B6B9A7800162EF7 /* Weekly-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Weekly-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2F6AE7F1B6C855E00162EF7 /* SnapKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SnapKit.xcodeproj; path = SnapKit/SnapKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomColorUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C91CF7AEDD8259489A315E /* libPods.a in Frameworks */,
+				F397B3DADFC8E31ED5934C1F /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +140,7 @@
 		369AEB796EC58621E4948E6A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3968064C954742F41D04A13E /* libPods.a */,
+				D99E4C73EDE36443666C811C /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -172,9 +174,10 @@
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
+				F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */,
 				F2F6AE2E1B6B8ED300162EF7 /* Main.storyboard */,
-				F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */,
 				F2F6AE331B6B8ED300162EF7 /* LaunchScreen.storyboard */,
+				F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */,
 				F2F6AE361B6B8ED300162EF7 /* Info.plist */,
 				F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */,
 				F2F6AE581B6B9A7800162EF7 /* Weekly-Bridging-Header.h */,
@@ -233,6 +236,7 @@
 				F2F6AE201B6B8ED300162EF7 /* Resources */,
 				F86751F19F6DF227D4AF5142 /* Copy Pods Resources */,
 				F2F6AE7D1B6C822D00162EF7 /* Copy Frameworks */,
+				F408C2B9626664FEC0D4F6D1 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -403,6 +407,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F408C2B9626664FEC0D4F6D1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F86751F19F6DF227D4AF5142 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,6 +446,7 @@
 			files = (
 				F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */,
 				F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */,
+				F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */,
 				F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */,
 				F2F6AE2D1B6B8ED300162EF7 /* DetailViewController.swift in Sources */,
 			);
