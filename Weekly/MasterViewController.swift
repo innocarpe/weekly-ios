@@ -13,7 +13,7 @@ import SnapKit
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
     SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    let DAY_LABEL_INSET: CGFloat = 6
+    let DAY_LABEL_INSET: CGFloat = 10
     
     var toolbar: UIToolbar!
     var naviHairlineImageView: UIImageView?
@@ -159,7 +159,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let labelWidth = screenWidth / 7;
         
         swipeView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dayOfWeekLabels[0].snp_bottom).offset(4)
+            make.top.equalTo(dayOfWeekLabels[0].snp_bottom).offset(-4)
             make.leading.trailing.equalTo(self.view)
             make.height.equalTo(labelWidth)
         }
@@ -200,9 +200,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         // toolbar 아래쪽을 selectedDayLabel 아래쪽과 맞춤(높이 조정)
         toolbar.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(selectedDayLabel.snp_bottom).offset(10)
+            make.bottom.equalTo(selectedDayLabel.snp_bottom).offset(12)
         }
         
+        selectedDayLabel.font = UIFont.systemFontOfSize(16)
         selectedDayLabel.textAlignment = .Center
         updateSelectedDayLabel()
         
@@ -214,7 +215,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let todayDate = CalendarUtils.getDateFromComponents(selectedYear, weekOfYear: selectedWeekOfYear, weekday: selectedWeekdayIndex + 1)
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.dateStyle = .LongStyle
         dateFormatter.timeStyle = .NoStyle
         
         let weekdayFormatter = NSDateFormatter()
@@ -369,7 +370,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 dayLabel.textAlignment = .Center;
                 dayLabel.text = String(CalendarUtils.getDayFromComponents(dateComponents.year, weekOfYear:
                     dateComponents.weekOfYear, weekday: weekDayIndex + 1))
-                dayLabel.font = UIFont.systemFontOfSize(18)
+                dayLabel.font = UIFont.systemFontOfSize(20, weight: 0.1) // 보통보다 조금 더 굵게 표시
                 dayLabel.tag = weekDayIndex
                 
                 dayView.addSubview(dayLabel)
