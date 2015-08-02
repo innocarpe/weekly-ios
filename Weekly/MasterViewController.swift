@@ -103,6 +103,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         for index in 0...6 {
             let dayOfWeekLabel = UILabel()
+            dayOfWeekLabel.layer.zPosition = 4
             dayOfWeekLabel.numberOfLines = 1
             dayOfWeekLabel.textAlignment = .Center;
             dayOfWeekLabel.text = getDayOfWeekString(index)
