@@ -13,6 +13,8 @@ import SnapKit
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
     SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    let DAY_LABEL_INSET: CGFloat = 6
+    
     var toolbar: UIToolbar!
     var naviHairlineImageView: UIImageView?
     var dayOfWeekLabels: [UILabel]!
@@ -111,15 +113,14 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 
                 if index == 0 {
                     make.leading.equalTo(self.view)
+                    dayOfWeekLabel.textColor = UIColor.grayColor()
                 } else if index == 6 {
                     make.trailing.equalTo(self.view)
+                    dayOfWeekLabel.textColor = UIColor.grayColor()
                 } else {
                     make.left.equalTo(dayOfWeekLabels[index-1].snp_right)
                 }
             }
-            
-            // TODO: UI test
-            dayOfWeekLabel.backgroundColor = RandomColorUtil.get()
         }
     }
     
@@ -148,20 +149,24 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         swipeView = SwipeView()
         swipeView.delegate = self
         swipeView.dataSource = self
-        swipeView.pagingEnabled = true;
+        swipeView.pagingEnabled = true
         
         self.view.addSubview(swipeView)
+        
+        let screenWidth = UIScreen.mainScreen().applicationFrame.width
+        let labelWidth = screenWidth / 7;
+        
         swipeView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dayOfWeekLabels[0].snp_bottom)
+            make.top.equalTo(dayOfWeekLabels[0].snp_bottom).offset(8)
             make.leading.trailing.equalTo(self.view)
-            make.height.equalTo(dayOfWeekLabels[0].snp_width)
+            make.height.equalTo(labelWidth)
             
 //            swipeView.currentItemIndex = 3
         }
 
         // toolbar 아래쪽을 SwipeView 아래쪽과 맞춤(높이 조정)
         toolbar.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(swipeView.snp_bottom)
+            make.bottom.equalTo(swipeView.snp_bottom).offset(10)
         }
         
         // 5페이지 중 중앙에 오게 설정
@@ -284,7 +289,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     // MARK: - SwipeView data source
     func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
-        return 5
+        return 3
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
@@ -295,20 +300,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             let labelWidth = screenWidth / 7;
             
             // 디바이스 width를 7로 나누어서 일~토 까지 width를 설정해주고, horizontal로 붙인다.
+            var dayViews = [UIView]();
             var dayLabels = [UILabel]();
             
             for index in 0...6 {
-                let dayLabel = UILabel()
-                dayLabel.numberOfLines = 1
-                dayLabel.textAlignment = .Center;
-                dayLabel.text = "31"
-                dayLabel.font = UIFont.systemFontOfSize(17)
-                dayLabel.tag = index
+                let dayView = UIView()
+                rootView.addSubview(dayView)
+                dayViews.append(dayView)
                 
-                rootView.addSubview(dayLabel)
-                dayLabels.append(dayLabel)
-                
-                dayLabel.snp_makeConstraints { (make) -> Void in
+                dayView.snp_makeConstraints { (make) -> Void in
                     make.top.bottom.equalTo(rootView)
                     make.width.equalTo(labelWidth)
                     
@@ -317,14 +317,37 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                     } else if index == 6 {
                         make.trailing.equalTo(rootView)
                     } else {
-                        make.left.equalTo(dayLabels[index-1].snp_right)
+                        make.left.equalTo(dayViews[index-1].snp_right)
+                    }
+                }
+                
+                let dayLabel = UILabel()
+                dayLabel.numberOfLines = 1
+                dayLabel.textAlignment = .Center;
+                dayLabel.text = "31"
+                dayLabel.font = UIFont.systemFontOfSize(18)
+                dayLabel.tag = index
+                
+                dayView.addSubview(dayLabel)
+                dayLabels.append(dayLabel)
+                
+                dayLabel.snp_makeConstraints { (make) -> Void in
+                    make.edges.equalTo(dayView).inset(UIEdgeInsetsMake(DAY_LABEL_INSET, DAY_LABEL_INSET,
+                        DAY_LABEL_INSET, DAY_LABEL_INSET))
+                    
+                    if index == 0 {
+                        dayLabel.textColor = UIColor.grayColor()
+                    } else if index == 6 {
+                        dayLabel.textColor = UIColor.grayColor()
+                    } else {
+                        dayLabel.textColor = UIColor.blackColor()
                     }
                 }
                 
                 // TODO: circle test
                 if index == selectedWeekdayIndex {
                     dayLabel.layer.masksToBounds = true
-                    dayLabel.layer.cornerRadius = labelWidth / 2
+                    dayLabel.layer.cornerRadius = (labelWidth - (DAY_LABEL_INSET * 2)) / 2
                     dayLabel.layer.borderWidth = 7.0;
                     dayLabel.layer.borderColor = UIColor.clearColor().CGColor
                     dayLabel.backgroundColor = UIColor.blackColor()
@@ -337,6 +360,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                 dayLabel.addGestureRecognizer(tapRecognizer)
                 
                 // TODO: UI test
+//                dayView.backgroundColor = RandomColorUtil.get()
 //                dayLabel.backgroundColor = RandomColorUtil.get()
             }
             return rootView
@@ -350,6 +374,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             let dayLabel: UILabel = recognizer.view as! UILabel
             selectedWeekdayIndex = dayLabel.tag
             swipeView.reloadData()
+            swipeView.scrollToItemAtIndex(2, duration: 0)
         }
     }
     
@@ -439,6 +464,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
         naviHairlineImageView?.hidden = true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // 여기서 처리를 안 해주면 깨짐. UI가 다 뜨고 나서 진행해야 하는 듯
+        swipeView.currentItemIndex = 1
+        swipeView.wrapEnabled = true
     }
     
     override func viewDidDisappear(animated: Bool) {
