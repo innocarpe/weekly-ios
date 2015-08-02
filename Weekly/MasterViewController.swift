@@ -11,7 +11,7 @@ import CoreData
 import SnapKit
 
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
-    SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate {
+    SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate, TodoPointCellDelegate {
     
     let DAY_LABEL_INSET: CGFloat = 10
     
@@ -239,7 +239,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             make.bottom.equalTo((self.bottomLayoutGuide as AnyObject as! UIView).snp_top)
         }
         
-        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TodoPoint")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        tableView.registerClass(TodoPointCell.classForCoder(), forCellReuseIdentifier: "TodoPoint")
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -515,7 +517,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TodoPoint")
+        let cell = tableView.dequeueReusableCellWithIdentifier("TodoPoint") as! TodoPointCell
         
         
         // Get the LogItem for this index
@@ -530,8 +532,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
         
         // Set the title of the cell to be the title of the logItem
-        cell!.textLabel?.text = todoPointItem.title
-        return cell!
+        cell.state = todoPointItem.state!
+        cell.textLabel?.text = todoPointItem.title
+        cell.textLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        cell.detailTextLabel?.text = todoPointItem.note
+        cell.currentSection = indexPath.section
+        cell.currentRow = indexPath.row
+        
+        cell.delegate = self
+        return cell
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -687,10 +696,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     */
     
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
-    }
+//    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
+//        let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+//        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
+//    }
 
     // MARK: - Fetched results controller
 
@@ -774,6 +783,18 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
          self.tableView.reloadData()
      }
      */
+    
+    func doneStateChange(state: NSNumber, section: Int, row: Int) {
+        if section == 0 {
+            visionTodoPoints[row].state = state
+        } else if section == 1 {
+            weeklyTodoPoints[row].state = state
+        } else {
+            dailyTodoPoints[row].state = state
+        }
+        
+        save()
+    }
 
 }
 

@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		AEAFC39B1B6CDED50092E7DE /* TodoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3971B6CDED50092E7DE /* TodoPoint.swift */; };
 		AEAFC39C1B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */; };
-		F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257639A1B6DCD630017101B /* CalendarUtils.swift */; };
 		AEAFC39E1B6DBA9D0092E7DE /* AddTodoPoint.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */; };
 		AEAFC3A01B6DE1E60092E7DE /* AddTodoPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC39F1B6DE1E60092E7DE /* AddTodoPointViewController.swift */; };
+		AEAFC3A31B6DF77C0092E7DE /* TodoPointCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3A21B6DF77C0092E7DE /* TodoPointCell.swift */; };
+		F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257639A1B6DCD630017101B /* CalendarUtils.swift */; };
 		F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DD91281B6CAEAD005350BB /* SwipeView.m */; };
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
@@ -100,6 +101,7 @@
 		AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddTodoPoint.storyboard; sourceTree = "<group>"; };
 		AEAFC39F1B6DE1E60092E7DE /* AddTodoPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTodoPointViewController.swift; sourceTree = "<group>"; };
+		AEAFC3A21B6DF77C0092E7DE /* TodoPointCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoPointCell.swift; sourceTree = "<group>"; };
 		D99E4C73EDE36443666C811C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F257639A1B6DCD630017101B /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
 		F2DD91271B6CAEAD005350BB /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				F2DD91281B6CAEAD005350BB /* SwipeView.m */,
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
+				AEAFC3A21B6DF77C0092E7DE /* TodoPointCell.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
 				F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */,
 				F257639A1B6DCD630017101B /* CalendarUtils.swift */,
@@ -472,6 +475,7 @@
 				F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */,
 				F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */,
 				F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */,
+				AEAFC3A31B6DF77C0092E7DE /* TodoPointCell.swift in Sources */,
 				F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */,
 				F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */,
 				F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */,
