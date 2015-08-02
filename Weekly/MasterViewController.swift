@@ -35,6 +35,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -50,7 +51,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initSelectedDayLabel()
         
         // TODO: 나중에 지워야할 더미 데이터
-        addDummys()
+//        addDummys()
         initTableView()
     }
     
@@ -241,7 +242,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TodoPoint")
         tableView.dataSource = self
         tableView.delegate = self
-        
+    }
+    
+    func fetchAllTodoPoint() {
         fetchVisionTodoPoint()
         fetchWeeklyTodoPoint()
         fetchDailyTodoPoint()
@@ -457,6 +460,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             selectedWeekdayIndex = dayLabel.tag
             updateSelectedDayLabel()
             swipeView.reloadData()
+            
+            fetchAllTodoPoint()
+            
+            tableView.reloadData()
         }
     }
     
@@ -468,11 +475,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Visioning Goals"
+            return "Visionin"
         } else if section == 1 {
-            return "26 Jul 2015 ~ 1 Aug 2015"
+            return "Weekly"
         } else {
-            return "21 Fri."
+            return "Daily"
         }
     }
     
@@ -536,7 +543,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             }
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//            save()
+            save()
+        }
+    }
+    
+    func save() {
+        do {
+            try managedObjectContext.save()
+        } catch{
+            print(error)
         }
     }
     
@@ -545,7 +560,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewWillAppear(animated: Bool) {
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        print("View Will Appear")
         naviHairlineImageView?.hidden = true
+        
+        fetchAllTodoPoint()
+        
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
