@@ -13,7 +13,7 @@ import SnapKit
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate, UIToolbarDelegate, SwipeViewDataSource,
     SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    let DAY_LABEL_INSET: CGFloat = 6
+    let DAY_LABEL_INSET: CGFloat = 10
     
     var toolbar: UIToolbar!
     var naviHairlineImageView: UIImageView?
@@ -24,6 +24,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var selectedYear: Int = 0
     var selectedWeekOfYear: Int = 0
     var selectedWeekdayIndex: Int = 0 // 1 = Sunday, 7 = Saturday 에서 -1 처리함
+    var selectedDayLabel: UILabel!
     
     var visionTodoPoints = [TodoPoint]()
     var dailyTodoPoints = [TodoPoint]()
@@ -46,6 +47,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initNavigationBar()
         initDayOfWeekLabels()
         initSwipeView()
+        initSelectedDayLabel()
         
         // TODO: 나중에 지워야할 더미 데이터
 //        addDummys()
@@ -54,7 +56,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func initDate() {
         // 오늘 날짜를 구해 요일 번호를 구한다
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = NSCalendar.autoupdatingCurrentCalendar()
         let components = calendar.components([.Year, .WeekOfYear, .Weekday], fromDate: NSDate())
         selectedYear = components.year
         selectedWeekOfYear = components.weekOfYear
@@ -158,21 +160,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let labelWidth = screenWidth / 7;
         
         swipeView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(dayOfWeekLabels[0].snp_bottom).offset(8)
+            make.top.equalTo(dayOfWeekLabels[0].snp_bottom).offset(-4)
             make.leading.trailing.equalTo(self.view)
             make.height.equalTo(labelWidth)
-            
-//            swipeView.currentItemIndex = 3
         }
 
-        // toolbar 아래쪽을 SwipeView 아래쪽과 맞춤(높이 조정)
-        toolbar.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(swipeView.snp_bottom).offset(10)
-        }
-        
-        // 5페이지 중 중앙에 오게 설정
-//        swipeView.scrollToItemAtIndex(3, duration: 0)
-        
         // TODO: UI test
 //        swipeView.backgroundColor = RandomColorUtil.get()
 //        swipeView.backgroundColor = UIColor.clearColor()
@@ -197,6 +189,41 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         for(itemTitle, itemNote, year, weekOfYear, weekDay, priority, type) in items {
             TodoPoint.createInManagedObjectContext(managedObjectContext, title: itemTitle, note: itemNote, year: year, weekOfYear: weekOfYear, weekDay: weekDay, priority: priority, type:type)
         }
+    }
+    
+    func initSelectedDayLabel() {
+        selectedDayLabel = UILabel()
+        self.view.addSubview(selectedDayLabel)
+        selectedDayLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(swipeView.snp_bottom)
+            make.leading.trailing.equalTo(self.view)
+        }
+        
+        // toolbar 아래쪽을 selectedDayLabel 아래쪽과 맞춤(높이 조정)
+        toolbar.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(selectedDayLabel.snp_bottom).offset(12)
+        }
+        
+        selectedDayLabel.font = UIFont.systemFontOfSize(16)
+        selectedDayLabel.textAlignment = .Center
+        updateSelectedDayLabel()
+        
+        // UI Test
+//        selectedDayLabel.backgroundColor = RandomColorUtil.get()
+    }
+    
+    func updateSelectedDayLabel() {
+        let todayDate = CalendarUtils.getDateFromComponents(selectedYear, weekOfYear: selectedWeekOfYear, weekday: selectedWeekdayIndex + 1)
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .LongStyle
+        dateFormatter.timeStyle = .NoStyle
+        
+        let weekdayFormatter = NSDateFormatter()
+        weekdayFormatter.dateFormat = "EEEE"
+        
+        
+        selectedDayLabel.text = dateFormatter.stringFromDate(todayDate) + " " + weekdayFormatter.stringFromDate(todayDate)
     }
     
     func initTableView() {
@@ -278,6 +305,21 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     // MARK: - SwipeView delegate
+    
+    func swipeViewCurrentItemIndexDidChange(swipeView: SwipeView!) {
+        NSLog("swipeViewCurrentItemIndexDidChange: %d", swipeView.currentItemIndex)
+//        swipeView.currentItemIndex = 1
+    }
+    
+    func swipeViewDidEndDragging(swipeView: SwipeView!, willDecelerate decelerate: Bool) {
+        NSLog("swipeViewDidEndDragging: %d", swipeView.currentItemIndex)
+//        swipeView.currentItemIndex = 1
+    }
+    
+    func swipeViewDidEndScrollingAnimation(swipeView: SwipeView!) {
+        NSLog("swipeViewDidEndScrollingAnimation: %d", swipeView.currentItemIndex)
+    }
+    
     /*
     func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
         return CGSizeMake(UIScreen.mainScreen().applicationFrame.width, 50)
@@ -290,9 +332,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
-        if view == nil {
-            let rootView = UIView(frame: swipeView.bounds)
+        // TODO: 원래는 뷰를 재사용해야 하기 때문에 nil이 아닐 경우에 대입만 따로 해 주는 로직을 구현할 필요가 있음
+//        if view == nil {
+            let dateComponents: (year: Int, weekOfYear: Int) = caculateDateComponents(index)
             
+            let rootView = UIView(frame: swipeView.bounds)
             let screenWidth = UIScreen.mainScreen().applicationFrame.width
             let labelWidth = screenWidth / 7;
             
@@ -300,7 +344,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             var dayViews = [UIView]();
             var dayLabels = [UILabel]();
             
-            for index in 0...6 {
+            for weekDayIndex in 0...6 {
                 let dayView = UIView()
                 rootView.addSubview(dayView)
                 dayViews.append(dayView)
@@ -309,45 +353,57 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
                     make.top.bottom.equalTo(rootView)
                     make.width.equalTo(labelWidth)
                     
-                    if index == 0 {
+                    if weekDayIndex == 0 {
                         make.leading.equalTo(rootView)
-                    } else if index == 6 {
+                    } else if weekDayIndex == 6 {
                         make.trailing.equalTo(rootView)
                     } else {
-                        make.left.equalTo(dayViews[index-1].snp_right)
+                        make.left.equalTo(dayViews[weekDayIndex-1].snp_right)
                     }
                 }
                 
                 let dayLabel = UILabel()
                 dayLabel.numberOfLines = 1
                 dayLabel.textAlignment = .Center;
-                dayLabel.text = "31"
-                dayLabel.font = UIFont.systemFontOfSize(18)
-                dayLabel.tag = index
+                dayLabel.text = String(CalendarUtils.getDayFromComponents(dateComponents.year, weekOfYear:
+                    dateComponents.weekOfYear, weekday: weekDayIndex + 1))
+                dayLabel.font = UIFont.systemFontOfSize(20, weight: 0.1) // 보통보다 조금 더 굵게 표시
+                dayLabel.tag = weekDayIndex
                 
                 dayView.addSubview(dayLabel)
                 dayLabels.append(dayLabel)
+                
+                let isDayLabelToday = CalendarUtils.isDateComponentEqualToday(dateComponents.year, weekOfYear:
+                    dateComponents.weekOfYear, weekday: weekDayIndex + 1)
                 
                 dayLabel.snp_makeConstraints { (make) -> Void in
                     make.edges.equalTo(dayView).inset(UIEdgeInsetsMake(DAY_LABEL_INSET, DAY_LABEL_INSET,
                         DAY_LABEL_INSET, DAY_LABEL_INSET))
                     
-                    if index == 0 {
+                    if weekDayIndex == 0 {
                         dayLabel.textColor = UIColor.grayColor()
-                    } else if index == 6 {
+                    } else if weekDayIndex == 6 {
                         dayLabel.textColor = UIColor.grayColor()
                     } else {
                         dayLabel.textColor = UIColor.blackColor()
                     }
+                    
+                    if isDayLabelToday == true {
+                        dayLabel.textColor = UIColor.redColor()
+                    }
                 }
                 
                 // TODO: circle test
-                if index == selectedWeekdayIndex {
+                if weekDayIndex == selectedWeekdayIndex {
                     dayLabel.layer.masksToBounds = true
                     dayLabel.layer.cornerRadius = (labelWidth - (DAY_LABEL_INSET * 2)) / 2
                     dayLabel.layer.borderWidth = 7.0;
                     dayLabel.layer.borderColor = UIColor.clearColor().CGColor
-                    dayLabel.backgroundColor = UIColor.blackColor()
+                    if isDayLabelToday == true {
+                        dayLabel.backgroundColor = UIColor.redColor()
+                    } else {
+                        dayLabel.backgroundColor = UIColor.blackColor()
+                    }
                     dayLabel.textColor = UIColor.whiteColor()
                 }
                 
@@ -361,17 +417,44 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 //                dayLabel.backgroundColor = RandomColorUtil.get()
             }
             return rootView
+//        } else {
+//            NSLog("index: %d", index)
+//            return view
+//        }
+    }
+    
+    func caculateDateComponents(index: Int) -> (year: Int, weekOfYear: Int) {
+        var year: Int = selectedYear
+        var weekOfYear: Int
+        
+        if index == 1 {
+            weekOfYear = selectedWeekOfYear
+        } else if index == 0 {
+            if selectedWeekOfYear == 1 {
+                year = selectedYear - 1
+                weekOfYear = CalendarUtils.getNumberOfWeeksOfYear(year)
+            } else {
+                year = selectedYear
+                weekOfYear = selectedWeekOfYear - 1
+            }
         } else {
-            return view
+            if selectedWeekOfYear == CalendarUtils.getNumberOfWeeksOfYear(selectedYear) {
+                year = selectedYear + 1
+                weekOfYear = 1
+            } else {
+                year = selectedYear
+                weekOfYear = selectedWeekOfYear + 1
+            }
         }
+        return (year, weekOfYear)
     }
     
     func dayLabelTouchBegan(recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Ended {
             let dayLabel: UILabel = recognizer.view as! UILabel
             selectedWeekdayIndex = dayLabel.tag
+            updateSelectedDayLabel()
             swipeView.reloadData()
-            swipeView.scrollToItemAtIndex(2, duration: 0)
         }
     }
     
