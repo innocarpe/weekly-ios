@@ -562,9 +562,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
         
         // Set the title of the cell to be the title of the logItem
-        cell.state = todoPointItem.state!
         cell.textLabel?.text = todoPointItem.title
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        cell.state = todoPointItem.state!
         cell.detailTextLabel?.text = todoPointItem.note
         cell.currentSection = indexPath.section
         cell.currentRow = indexPath.row

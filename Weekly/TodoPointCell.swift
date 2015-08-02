@@ -30,13 +30,14 @@ class TodoPointCell: UITableViewCell {
                 let undoneIcon = UIImage(named: "TodoUndoneIcon")
                 imageView?.image = undoneIcon
                 textLabel?.textColor = UIColor.blackColor()
+                unstrikeLabel()
             } else {
                 currentState = 1
                 let doneIcon = UIImage(named: "TodoDoneIcon")
                 imageView?.image = doneIcon
                 textLabel?.textColor = UIColor.lightGrayColor()
+                strikeLabel()
             }
-            
             currentState = newState
         }
     }
@@ -71,6 +72,8 @@ class TodoPointCell: UITableViewCell {
         textLabel?.textColor = UIColor.lightGrayColor()
         
         delegate?.doneStateChange(state, section: currentSection!, row: currentRow!)
+        
+        strikeLabel()
     }
     
     func changeToUndone() {
@@ -86,6 +89,26 @@ class TodoPointCell: UITableViewCell {
 //        [self.label setAttributedText:string];
         
         delegate?.doneStateChange(state, section: currentSection!, row: currentRow!)
+        
+        unstrikeLabel()
     }
     
+    func strikeLabel() {
+        let targetString = textLabel != nil ? textLabel?.text : ""
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: targetString!)
+        attributedString.addAttribute(NSStrikethroughColorAttributeName, value: UIColor.lightGrayColor(), range: NSMakeRange(0, attributedString.length))
+        
+        let attributes = [NSStrikethroughStyleAttributeName : NSUnderlineStyle.StyleSingle.rawValue]
+        attributedString.addAttributes(attributes, range: NSMakeRange(0, attributedString.length))
+        
+        textLabel?.attributedText = attributedString
+    }
+    
+    func unstrikeLabel() {
+        let targetString = textLabel != nil ? textLabel?.text : ""
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: targetString!)
+        attributedString.removeAttribute(NSStrikethroughColorAttributeName, range: NSMakeRange(0, attributedString.length))
+        attributedString.removeAttribute(NSStrikethroughStyleAttributeName, range: NSMakeRange(0, attributedString.length))
+        textLabel?.attributedText = attributedString
+    }
 }
