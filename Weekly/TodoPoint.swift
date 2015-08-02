@@ -32,5 +32,9 @@ class TodoPoint: NSManagedObject {
         super.awakeFromInsert()
         self.createdAt = NSDate();
     }
+    
+    func changeState(state: NSNumber) {
+        self.state = state
+    }
 
 }

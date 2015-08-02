@@ -24,5 +24,4 @@ extension TodoPoint {
     @NSManaged var weekOfYear: NSNumber?
     @NSManaged var weekDay: NSNumber?
     @NSManaged var year: NSNumber?
-
 }

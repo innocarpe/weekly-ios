@@ -352,6 +352,13 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
         previousSwipeViewIndex = swipeView.currentItemIndex
         updateSelectedDayLabel()
+        
+        // 여기서 UI변경
+        
+        
+        fetchAllTodoPoint()
+        
+        tableView.reloadData()
     }
     
     // MARK: - SwipeView data source
@@ -808,11 +815,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func doneStateChange(state: NSNumber, section: Int, row: Int) {
         if section == 0 {
-            visionTodoPoints[row].state = state
+            visionTodoPoints[row].changeState(state)
         } else if section == 1 {
-            weeklyTodoPoints[row].state = state
+            weeklyTodoPoints[row].changeState(state)
         } else {
-            dailyTodoPoints[row].state = state
+            dailyTodoPoints[row].changeState(state)
         }
         
         save()

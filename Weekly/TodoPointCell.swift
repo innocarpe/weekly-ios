@@ -26,9 +26,15 @@ class TodoPointCell: UITableViewCell {
         }
         set(newState) {
             if newState == 0 {
-                changeToUndone()
+                currentState = 0
+                let undoneIcon = UIImage(named: "TodoUndoneIcon")
+                imageView?.image = undoneIcon
+                textLabel?.textColor = UIColor.blackColor()
             } else {
-                changeToDone()
+                currentState = 1
+                let doneIcon = UIImage(named: "TodoDoneIcon")
+                imageView?.image = doneIcon
+                textLabel?.textColor = UIColor.lightGrayColor()
             }
             
             currentState = newState
