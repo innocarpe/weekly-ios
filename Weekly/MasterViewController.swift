@@ -19,6 +19,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var naviHairlineImageView: UIImageView?
     var dayOfWeekLabels: [UILabel]!
     var swipeView: SwipeView!
+    var previousSwipeViewIndex: Int = 1
     var tableView: UITableView!
     
     var selectedYear: Int = 0
@@ -70,6 +71,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func initToolbar() {
         toolbar = UIToolbar()
         self.view.addSubview(toolbar)
+        toolbar.layer.zPosition = 2
         toolbar.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(self.view)
             make.top.equalTo((self.topLayoutGuide as AnyObject as! UIView).snp_bottom)
@@ -152,6 +154,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         swipeView.delegate = self
         swipeView.dataSource = self
         swipeView.pagingEnabled = true
+        swipeView.layer.zPosition = 3
         
         self.view.addSubview(swipeView)
         
@@ -193,6 +196,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func initSelectedDayLabel() {
         selectedDayLabel = UILabel()
         self.view.addSubview(selectedDayLabel)
+        selectedDayLabel.layer.zPosition = 4
         selectedDayLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(swipeView.snp_bottom)
             make.leading.trailing.equalTo(self.view)
@@ -228,9 +232,9 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     func initTableView() {
         tableView = UITableView()
         self.view.addSubview(tableView)
-        self.view.sendSubviewToBack(tableView)
+        tableView.layer.zPosition = 1
         tableView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(toolbar.snp_bottom)
+            make.top.equalTo(toolbar.snp_bottom).offset(1)
             make.leading.trailing.equalTo(self.view)
             make.bottom.equalTo((self.bottomLayoutGuide as AnyObject as! UIView).snp_top)
         }
@@ -308,7 +312,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     // MARK: - SwipeView delegate
-    
+
     func swipeViewCurrentItemIndexDidChange(swipeView: SwipeView!) {
         NSLog("swipeViewCurrentItemIndexDidChange: %d", swipeView.currentItemIndex)
 //        swipeView.currentItemIndex = 1
@@ -319,10 +323,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 //        swipeView.currentItemIndex = 1
     }
     
-    func swipeViewDidEndScrollingAnimation(swipeView: SwipeView!) {
-        NSLog("swipeViewDidEndScrollingAnimation: %d", swipeView.currentItemIndex)
-    }
-    
     /*
     func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
         return CGSizeMake(UIScreen.mainScreen().applicationFrame.width, 50)
@@ -331,7 +331,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     // MARK: - SwipeView data source
     func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
-        return 3
+        return 5
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
@@ -552,7 +552,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // 여기서 처리를 안 해주면 깨짐. UI가 다 뜨고 나서 진행해야 하는 듯
-        swipeView.currentItemIndex = 1
+        swipeView.currentItemIndex = 2
         swipeView.wrapEnabled = true
     }
     
