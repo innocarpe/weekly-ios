@@ -241,6 +241,12 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         tableView.delegate = self
     }
     
+    func fetchAllTodoPoint() {
+        fetchVisionTodoPoint()
+        fetchWeeklyTodoPoint()
+        fetchDailyTodoPoint()
+    }
+    
     func fetchVisionTodoPoint() {
         let fetchRequest = NSFetchRequest(entityName: "TodoPoint")
         
@@ -455,6 +461,10 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             selectedWeekdayIndex = dayLabel.tag
             updateSelectedDayLabel()
             swipeView.reloadData()
+            
+            fetchAllTodoPoint()
+            
+            tableView.reloadData()
         }
     }
     
@@ -466,11 +476,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Visioning Goals"
+            return "Visionin"
         } else if section == 1 {
-            return "26 Jul 2015 ~ 1 Aug 2015"
+            return "Weekly"
         } else {
-            return "21 Fri."
+            return "Daily"
         }
     }
     
@@ -534,7 +544,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             }
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//            save()
+            save()
+        }
+    }
+    
+    func save() {
+        do {
+            try managedObjectContext.save()
+        } catch{
+            print(error)
         }
     }
     
@@ -547,9 +565,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         print("View Will Appear")
         naviHairlineImageView?.hidden = true
         
-        fetchVisionTodoPoint()
-        fetchWeeklyTodoPoint()
-        fetchDailyTodoPoint()
+        fetchAllTodoPoint()
         
         tableView.reloadData()
     }
