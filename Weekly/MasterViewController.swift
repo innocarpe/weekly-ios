@@ -19,7 +19,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var naviHairlineImageView: UIImageView?
     var dayOfWeekLabels: [UILabel]!
     var swipeView: SwipeView!
-    var previousSwipeViewIndex: Int = 1
+    var previousSwipeViewIndex: Int = 0
     var tableView: UITableView!
     
     var selectedYear: Int = 0
@@ -317,24 +317,31 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - SwipeView delegate
 
     func swipeViewCurrentItemIndexDidChange(swipeView: SwipeView!) {
-        NSLog("swipeViewCurrentItemIndexDidChange: %d", swipeView.currentItemIndex)
-//        swipeView.currentItemIndex = 1
+        // 스와이프 방향 체크
+        if swipeView.currentItemIndex == (previousSwipeViewIndex + 1) % 3 {
+            // 왼쪽 스와이프, weekOfYear 증가
+            if selectedWeekOfYear == CalendarUtils.getNumberOfWeeksOfYear(selectedYear) {
+                selectedYear = selectedYear + 1
+                selectedWeekOfYear = 1
+            } else {
+                selectedWeekOfYear = selectedWeekOfYear + 1
+            }
+        } else if swipeView.currentItemIndex == (previousSwipeViewIndex - 1 + 3) % 3 {
+            // 오른쪽 스와이프, weekOfYear 감소
+            if selectedWeekOfYear == 1 {
+                selectedYear = selectedYear - 1
+                selectedWeekOfYear = CalendarUtils.getNumberOfWeeksOfYear(selectedWeekOfYear)
+            } else {
+                selectedWeekOfYear = selectedWeekOfYear - 1
+            }
+        }
+        previousSwipeViewIndex = swipeView.currentItemIndex
+        updateSelectedDayLabel()
     }
-    
-    func swipeViewDidEndDragging(swipeView: SwipeView!, willDecelerate decelerate: Bool) {
-        NSLog("swipeViewDidEndDragging: %d", swipeView.currentItemIndex)
-//        swipeView.currentItemIndex = 1
-    }
-    
-    /*
-    func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().applicationFrame.width, 50)
-    }
-    */
     
     // MARK: - SwipeView data source
     func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
-        return 5
+        return 3
     }
     
     func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
@@ -430,26 +437,28 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func caculateDateComponents(index: Int) -> (year: Int, weekOfYear: Int) {
+        // 초기화시는 그대로 사용
         var year: Int = selectedYear
-        var weekOfYear: Int
+        var weekOfYear: Int = selectedWeekOfYear
         
-        if index == 1 {
-            weekOfYear = selectedWeekOfYear
-        } else if index == 0 {
-            if selectedWeekOfYear == 1 {
-                year = selectedYear - 1
-                weekOfYear = CalendarUtils.getNumberOfWeeksOfYear(year)
-            } else {
-                year = selectedYear
-                weekOfYear = selectedWeekOfYear - 1
-            }
-        } else {
+        // 왼/오른 스와이프 체크
+        if index == (swipeView.currentItemIndex + 1) % 3 {
+            // 왼쪽 스와이프, weekOfYear 증가
             if selectedWeekOfYear == CalendarUtils.getNumberOfWeeksOfYear(selectedYear) {
                 year = selectedYear + 1
                 weekOfYear = 1
             } else {
                 year = selectedYear
                 weekOfYear = selectedWeekOfYear + 1
+            }
+        } else if index == (swipeView.currentItemIndex - 1 + 3) % 3 {
+            // 오른쪽 스와이프, weekOfYear 감소
+            if selectedWeekOfYear == 1 {
+                year = selectedYear - 1
+                weekOfYear = CalendarUtils.getNumberOfWeeksOfYear(year)
+            } else {
+                year = selectedYear
+                weekOfYear = selectedWeekOfYear - 1
             }
         }
         return (year, weekOfYear)
@@ -588,7 +597,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // 여기서 처리를 안 해주면 깨짐. UI가 다 뜨고 나서 진행해야 하는 듯
-        swipeView.currentItemIndex = 2
         swipeView.wrapEnabled = true
     }
     
