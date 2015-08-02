@@ -17,7 +17,6 @@
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
 		F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */; };
-		F2F6AE2D1B6B8ED300162EF7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */; };
 		F2F6AE301B6B8ED300162EF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F6AE2E1B6B8ED300162EF7 /* Main.storyboard */; };
 		F2F6AE321B6B8ED300162EF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */; };
 		F2F6AE351B6B8ED300162EF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F6AE331B6B8ED300162EF7 /* LaunchScreen.storyboard */; };
@@ -110,7 +109,6 @@
 		F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2F6AE281B6B8ED300162EF7 /* Weekly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weekly.xcdatamodel; sourceTree = "<group>"; };
 		F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F2F6AE2F1B6B8ED300162EF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2F6AE341B6B8ED300162EF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -193,17 +191,16 @@
 				F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */,
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				AEAFC3A21B6DF77C0092E7DE /* TodoPointCell.swift */,
-				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
+				AEAFC39F1B6DE1E60092E7DE /* AddTodoPointViewController.swift */,
 				F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */,
 				F257639A1B6DCD630017101B /* CalendarUtils.swift */,
 				F2F6AE2E1B6B8ED300162EF7 /* Main.storyboard */,
 				F2F6AE331B6B8ED300162EF7 /* LaunchScreen.storyboard */,
+				AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */,
 				F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */,
 				F2F6AE361B6B8ED300162EF7 /* Info.plist */,
 				F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */,
 				F2F6AE581B6B9A7800162EF7 /* Weekly-Bridging-Header.h */,
-				AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */,
-				AEAFC39F1B6DE1E60092E7DE /* AddTodoPointViewController.swift */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -479,7 +476,6 @@
 				F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */,
 				F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */,
 				F2F6AE2B1B6B8ED300162EF7 /* MasterViewController.swift in Sources */,
-				F2F6AE2D1B6B8ED300162EF7 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
