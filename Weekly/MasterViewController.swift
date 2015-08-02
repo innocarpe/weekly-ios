@@ -37,7 +37,8 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+//        let backButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+//        self.navigationItem.leftBarButtonItem = backButtonItem
 
         // Model
         initDate()
@@ -218,16 +219,28 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func updateSelectedDayLabel() {
-        let todayDate = CalendarUtils.getDateFromComponents(selectedYear, weekOfYear: selectedWeekOfYear, weekday: selectedWeekdayIndex + 1)
+        let selectedDate = CalendarUtils.getDateFromComponents(selectedYear, weekOfYear: selectedWeekOfYear, weekday: selectedWeekdayIndex + 1)
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .LongStyle
+        dateFormatter.locale = NSLocale.autoupdatingCurrentLocale()
+        dateFormatter.dateStyle = .FullStyle
         dateFormatter.timeStyle = .NoStyle
         
         let weekdayFormatter = NSDateFormatter()
         weekdayFormatter.dateFormat = "EEEE"
 
-        selectedDayLabel.text = dateFormatter.stringFromDate(todayDate) + " " + weekdayFormatter.stringFromDate(todayDate)
+        selectedDayLabel.text = dateFormatter.stringFromDate(selectedDate)
+        
+        // 타이틀도 이번 달로 변경해주자
+        let monthFormatter = NSDateFormatter()
+        monthFormatter.dateFormat = "MMMM"
+        self.title = monthFormatter.stringFromDate(selectedDate)
+        
+        // 백 버튼에 년도 추가, 더 상위 컨트롤러를 만들어서 백 버튼으로 넣을 수 있게 구현 필요
+        // 기획 변경: 삭제
+//        let yearFormatter = NSDateFormatter()
+//        yearFormatter.dateFormat = "yyyy"
+//        self.navigationItem.leftBarButtonItem?.title = yearFormatter.stringFromDate(selectedDate)
     }
     
     func initTableView() {

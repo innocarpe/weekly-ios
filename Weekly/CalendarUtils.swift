@@ -12,8 +12,8 @@ class CalendarUtils: NSObject {
     static let calendar = NSCalendar.autoupdatingCurrentCalendar()
     
     class func getNumberOfWeeksOfYear(year: Int) -> Int {
-        let components = calendar.components([.Year, .WeekOfYear, .Weekday], fromDate: NSDate())
-        components.year = year
+        let components = calendar.components([.YearForWeekOfYear, .WeekOfYear, .Weekday], fromDate: NSDate())
+        components.yearForWeekOfYear = year
         
         let targetDate = calendar.dateFromComponents(components)
         
@@ -23,7 +23,7 @@ class CalendarUtils: NSObject {
     class func getDateFromComponents(year: Int, weekOfYear: Int, weekday: Int) -> NSDate! {
         let calendarUnit: NSCalendarUnit = [.YearForWeekOfYear, .WeekOfYear, .Weekday]
         let components = calendar.components(calendarUnit, fromDate: NSDate())
-        components.year = year
+        components.yearForWeekOfYear = year
         components.weekOfYear = weekOfYear
         components.weekday = weekday
         
