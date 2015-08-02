@@ -20,14 +20,18 @@ class CalendarUtils: NSObject {
         return calendar.rangeOfUnit(.WeekOfYear, inUnit:.YearForWeekOfYear, forDate: targetDate!).length
     }
     
-    class func getDayFromComponents(year: Int, weekOfYear: Int, weekday: Int) -> Int {
+    class func getDateFromComponents(year: Int, weekOfYear: Int, weekday: Int) -> NSDate! {
         let calendarUnit: NSCalendarUnit = [.YearForWeekOfYear, .WeekOfYear, .Weekday]
         let components = calendar.components(calendarUnit, fromDate: NSDate())
         components.year = year
         components.weekOfYear = weekOfYear
         components.weekday = weekday
         
-        let targetDate: NSDate! = calendar.dateFromComponents(components)
+        return calendar.dateFromComponents(components)
+    }
+    
+    class func getDayFromComponents(year: Int, weekOfYear: Int, weekday: Int) -> Int {
+        let targetDate = getDateFromComponents(year, weekOfYear: weekOfYear, weekday: weekday)
         let targetCalendarUnit: NSCalendarUnit = [.Day]
         let targetComponents = calendar.components(targetCalendarUnit, fromDate: targetDate)
         

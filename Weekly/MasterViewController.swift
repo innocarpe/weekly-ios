@@ -24,6 +24,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     var selectedYear: Int = 0
     var selectedWeekOfYear: Int = 0
     var selectedWeekdayIndex: Int = 0 // 1 = Sunday, 7 = Saturday 에서 -1 처리함
+    var selectedDayLabel: UILabel!
     
     var visionTodoPoints = [TodoPoint]()
     var dailyTodoPoints = [TodoPoint]()
@@ -45,6 +46,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initNavigationBar()
         initDayOfWeekLabels()
         initSwipeView()
+        initSelectedDayLabel()
         
         // TODO: 나중에 지워야할 더미 데이터
         addDummys()
@@ -162,11 +164,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
             make.height.equalTo(labelWidth)
         }
 
-        // toolbar 아래쪽을 SwipeView 아래쪽과 맞춤(높이 조정)
-        toolbar.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(swipeView.snp_bottom).offset(8)
-        }
-        
         // TODO: UI test
 //        swipeView.backgroundColor = RandomColorUtil.get()
 //        swipeView.backgroundColor = UIColor.clearColor()
@@ -191,6 +188,40 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         for(itemTitle, itemNote, year, weekOfYear, weekDay, priority, type) in items {
             TodoPoint.createInManagedObjectContext(managedObjectContext, title: itemTitle, note: itemNote, year: year, weekOfYear: weekOfYear, weekDay: weekDay, priority: priority, type:type)
         }
+    }
+    
+    func initSelectedDayLabel() {
+        selectedDayLabel = UILabel()
+        self.view.addSubview(selectedDayLabel)
+        selectedDayLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(swipeView.snp_bottom)
+            make.leading.trailing.equalTo(self.view)
+        }
+        
+        // toolbar 아래쪽을 selectedDayLabel 아래쪽과 맞춤(높이 조정)
+        toolbar.snp_makeConstraints { (make) -> Void in
+            make.bottom.equalTo(selectedDayLabel.snp_bottom).offset(10)
+        }
+        
+        selectedDayLabel.textAlignment = .Center
+        updateSelectedDayLabel()
+        
+        // UI Test
+//        selectedDayLabel.backgroundColor = RandomColorUtil.get()
+    }
+    
+    func updateSelectedDayLabel() {
+        let todayDate = CalendarUtils.getDateFromComponents(selectedYear, weekOfYear: selectedWeekOfYear, weekday: selectedWeekdayIndex + 1)
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .NoStyle
+        
+        let weekdayFormatter = NSDateFormatter()
+        weekdayFormatter.dateFormat = "EEEE"
+        
+        
+        selectedDayLabel.text = dateFormatter.stringFromDate(todayDate) + " " + weekdayFormatter.stringFromDate(todayDate)
     }
     
     func initTableView() {
@@ -424,6 +455,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         if recognizer.state == UIGestureRecognizerState.Ended {
             let dayLabel: UILabel = recognizer.view as! UILabel
             selectedWeekdayIndex = dayLabel.tag
+            updateSelectedDayLabel()
             swipeView.reloadData()
         }
     }
