@@ -10,6 +10,7 @@
 		AEAFC39B1B6CDED50092E7DE /* TodoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3971B6CDED50092E7DE /* TodoPoint.swift */; };
 		AEAFC39C1B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */; };
 		F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257639A1B6DCD630017101B /* CalendarUtils.swift */; };
+		AEAFC39E1B6DBA9D0092E7DE /* AddTodoPoint.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */; };
 		F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DD91281B6CAEAD005350BB /* SwipeView.m */; };
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
@@ -96,6 +97,7 @@
 		AA421D99AB6921EA61B422CB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AEAFC3971B6CDED50092E7DE /* TodoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoPoint.swift; sourceTree = "<group>"; };
 		AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddTodoPoint.storyboard; sourceTree = "<group>"; };
 		D99E4C73EDE36443666C811C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F257639A1B6DCD630017101B /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
 		F2DD91271B6CAEAD005350BB /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				F2F6AE361B6B8ED300162EF7 /* Info.plist */,
 				F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */,
 				F2F6AE581B6B9A7800162EF7 /* Weekly-Bridging-Header.h */,
+				AEAFC39D1B6DBA9D0092E7DE /* AddTodoPoint.storyboard */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				F2F6AE351B6B8ED300162EF7 /* LaunchScreen.storyboard in Resources */,
 				F2F6AE321B6B8ED300162EF7 /* Assets.xcassets in Resources */,
 				F2F6AE301B6B8ED300162EF7 /* Main.storyboard in Resources */,
+				AEAFC39E1B6DBA9D0092E7DE /* AddTodoPoint.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,7 +61,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     func initAddButton() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewTodoPoint:")
         self.navigationItem.rightBarButtonItem = addButton
     }
     
@@ -530,7 +530,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     // MARK:
 
-    func insertNewObject(sender: AnyObject) {
+    func insertNewTodoPoint(sender: AnyObject) {
+        
+        let viewControllerForPopover = UIStoryboard(name: "AddTodoPoint", bundle: nil).instantiateViewControllerWithIdentifier("addTodoPointViewController")
+        self.navigationController?.pushViewController(viewControllerForPopover, animated: true)
+        
         /*
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
