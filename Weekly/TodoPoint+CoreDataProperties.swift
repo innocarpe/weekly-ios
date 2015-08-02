@@ -21,6 +21,8 @@ extension TodoPoint {
     @NSManaged var createdAt: NSDate?
     @NSManaged var modifiedAt: NSDate?
     @NSManaged var type: NSNumber?
-    @NSManaged var weekNumber: NSNumber?
+    @NSManaged var weekOfYear: NSNumber?
+    @NSManaged var weekDay: NSNumber?
+    @NSManaged var year: NSNumber?
 
 }

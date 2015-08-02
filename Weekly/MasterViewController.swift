@@ -174,17 +174,22 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func addDummys() {
         let items = [
-            ("(Vision) Point", "Dog", 10, 0, 0),
-            ("(Weekly) Best Language", "Swift", 10, 0, 1),
-            ("(Weekly) Worst Animal", "Cthulu", 10, 0, 1),
-            ("(Daily) Worst Language", "LOLCODE", 10, 0, 2),
-            ("(Daily) Language", "LOLCODE", 10, 0, 2),
-            ("(Daily) Language", "LOLCODE", 10, 0, 2),
-            ("(Daily) Language", "LOLCODE", 10, 0, 2)
+            ("(Vision) Vision Point", "My vision is...", selectedYear, 0, 0, 0, 0),
+            ("(Weekly) Weekly Point", "My weekly point 1 is", selectedYear, selectedWeekOfYear, 0, 0, 1),
+            ("(Weekly) Weekly Point", "My weekly point 2 is", selectedYear, selectedWeekOfYear, 0, 0, 1),
+            ("(Weekly) Weekly Point", "My weekly point 2 is", selectedYear, selectedWeekOfYear + 1, 0, 0, 1),
+            ("(Daily) Daily Point", "My daily point 1 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex, 0, 2),
+            ("(Daily) Daily Point", "My daily point 2 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex, 0, 2),
+            ("(Daily) Daily Point", "My daily point 3 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex, 0, 2),
+            ("(Daily) Daily Point", "My daily point 4 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex, 0, 2),
+            ("(Daily) Daily Point", "My daily point 1 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex - 1, 0, 2),
+            ("(Daily) Daily Point", "My daily point 2 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex - 1, 0, 2),
+            ("(Daily) Daily Point", "My daily point 3 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex - 1, 0, 2),
+            ("(Daily) Daily Point", "My daily point 4 is", selectedYear, selectedWeekOfYear, selectedWeekdayIndex - 1, 0, 2)
         ]
         
-        for(itemTitle, itemNote, weekNumber, priority, type) in items {
-            TodoPoint.createInManagedObjectContext(managedObjectContext, title: itemTitle, note: itemNote, weekNumber: weekNumber, priority: priority, type:type)
+        for(itemTitle, itemNote, year, weekOfYear, weekDay, priority, type) in items {
+            TodoPoint.createInManagedObjectContext(managedObjectContext, title: itemTitle, note: itemNote, year: year, weekOfYear: weekOfYear, weekDay: weekDay, priority: priority, type:type)
         }
     }
     
@@ -231,7 +236,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "type == %i", 1)
+        let predicate1 = NSPredicate(format: "type == %i", 1)
+        let predicate2 = NSPredicate(format: "year == %i", selectedYear)
+        let predicate3 = NSPredicate(format: "weekOfYear == %i", selectedWeekOfYear)
+        let predicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [predicate1, predicate2, predicate3])
+        
         fetchRequest.predicate = predicate
         
         do {
@@ -249,7 +258,12 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "type == %i", 2)
+        let predicate1 = NSPredicate(format: "type == %i", 2)
+        let predicate2 = NSPredicate(format: "year == %i", selectedYear)
+        let predicate3 = NSPredicate(format: "weekOfYear == %i", selectedWeekOfYear)
+        let predicate4 = NSPredicate(format: "weekDay == %i", selectedWeekdayIndex)
+        let predicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [predicate1, predicate2, predicate3, predicate4])
+        
         fetchRequest.predicate = predicate
         
         do {
