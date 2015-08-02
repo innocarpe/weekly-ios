@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AEAFC39B1B6CDED50092E7DE /* TodoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3971B6CDED50092E7DE /* TodoPoint.swift */; };
 		AEAFC39C1B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */; };
+		F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257639A1B6DCD630017101B /* CalendarUtils.swift */; };
 		F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F2DD91281B6CAEAD005350BB /* SwipeView.m */; };
 		F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE251B6B8ED300162EF7 /* AppDelegate.swift */; };
 		F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2F6AE271B6B8ED300162EF7 /* Weekly.xcdatamodeld */; };
@@ -96,6 +97,7 @@
 		AEAFC3971B6CDED50092E7DE /* TodoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoPoint.swift; sourceTree = "<group>"; };
 		AEAFC3981B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D99E4C73EDE36443666C811C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F257639A1B6DCD630017101B /* CalendarUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
 		F2DD91271B6CAEAD005350BB /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
 		F2DD91281B6CAEAD005350BB /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		F2F6AE221B6B8ED300162EF7 /* Weekly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +188,7 @@
 				F2F6AE2A1B6B8ED300162EF7 /* MasterViewController.swift */,
 				F2F6AE2C1B6B8ED300162EF7 /* DetailViewController.swift */,
 				F2F6AE931B6C8FBA00162EF7 /* RandomColorUtil.swift */,
+				F257639A1B6DCD630017101B /* CalendarUtils.swift */,
 				F2F6AE2E1B6B8ED300162EF7 /* Main.storyboard */,
 				F2F6AE331B6B8ED300162EF7 /* LaunchScreen.storyboard */,
 				F2F6AE311B6B8ED300162EF7 /* Assets.xcassets */,
@@ -459,6 +462,7 @@
 				AEAFC39B1B6CDED50092E7DE /* TodoPoint.swift in Sources */,
 				AEAFC39C1B6CDED50092E7DE /* TodoPoint+CoreDataProperties.swift in Sources */,
 				F2F6AE291B6B8ED300162EF7 /* Weekly.xcdatamodeld in Sources */,
+				F257639B1B6DCD630017101B /* CalendarUtils.swift in Sources */,
 				F2F6AE261B6B8ED300162EF7 /* AppDelegate.swift in Sources */,
 				F2F6AE941B6C8FBA00162EF7 /* RandomColorUtil.swift in Sources */,
 				F2DD91291B6CAEAD005350BB /* SwipeView.m in Sources */,
