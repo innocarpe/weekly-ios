@@ -224,8 +224,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         let weekdayFormatter = NSDateFormatter()
         weekdayFormatter.dateFormat = "EEEE"
-        
-        
+
         selectedDayLabel.text = dateFormatter.stringFromDate(todayDate) + " " + weekdayFormatter.stringFromDate(todayDate)
     }
     
