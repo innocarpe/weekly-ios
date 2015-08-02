@@ -471,7 +471,22 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - TableView delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // Get the LogItem for this index
+        var todoPointItem : TodoPoint
         
+        if indexPath.section == 0 {
+            todoPointItem = visionTodoPoints[indexPath.row]
+        } else if indexPath.section == 1 {
+            todoPointItem = weeklyTodoPoints[indexPath.row]
+        } else  {
+            todoPointItem = dailyTodoPoints[indexPath.row]
+        }
+        
+        let titlePrompt = UIAlertController(title: "Note", message: todoPointItem.note, preferredStyle: .Alert)
+        titlePrompt.addAction(UIAlertAction(title: "Ok", style: .Default,
+            handler: nil))
+        
+        self.presentViewController(titlePrompt, animated: true, completion: nil)
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
