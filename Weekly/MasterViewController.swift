@@ -33,6 +33,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -47,7 +48,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         initSwipeView()
         
         // TODO: 나중에 지워야할 더미 데이터
-        addDummys()
+//        addDummys()
         initTableView()
     }
     
@@ -211,10 +212,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TodoPoint")
         tableView.dataSource = self
         tableView.delegate = self
-        
-        fetchVisionTodoPoint()
-        fetchWeeklyTodoPoint()
-        fetchDailyTodoPoint()
     }
     
     func fetchVisionTodoPoint() {
@@ -463,7 +460,15 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewWillAppear(animated: Bool) {
 //        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        print("View Will Appear")
         naviHairlineImageView?.hidden = true
+        
+        fetchVisionTodoPoint()
+        fetchWeeklyTodoPoint()
+        fetchDailyTodoPoint()
+        
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
