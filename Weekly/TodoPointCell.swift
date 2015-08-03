@@ -26,17 +26,9 @@ class TodoPointCell: UITableViewCell {
         }
         set(newState) {
             if newState == 0 {
-                currentState = 0
-                let undoneIcon = UIImage(named: "TodoUndoneIcon")
-                imageView?.image = undoneIcon
-                textLabel?.textColor = UIColor.blackColor()
-                unstrikeLabel()
+                changeToUndone()
             } else {
-                currentState = 1
-                let doneIcon = UIImage(named: "TodoDoneIcon")
-                imageView?.image = doneIcon
-                textLabel?.textColor = UIColor.lightGrayColor()
-                strikeLabel()
+                changeToDone()
             }
             currentState = newState
         }
@@ -63,6 +55,8 @@ class TodoPointCell: UITableViewCell {
         } else {
             changeToUndone()
         }
+        
+        delegate?.doneStateChange(state, section: currentSection!, row: currentRow!)
     }
     
     func changeToDone() {
@@ -82,13 +76,6 @@ class TodoPointCell: UITableViewCell {
         imageView?.image = undoneIcon
         textLabel?.textColor = UIColor.blackColor()
         
-//        NSStrike
-//        
-//        var string = NSMutableAttributedString(string: (textLabel?.text)!)
-//        string.addAttribute(NSStrikethroughStyleAttributeName, value: nil range: NSRange(0,(textLabel?.text)!.):@{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle)} range:[text rangeOfString:retailPrice]];
-//        [self.label setAttributedText:string];
-        
-        delegate?.doneStateChange(state, section: currentSection!, row: currentRow!)
         
         unstrikeLabel()
     }

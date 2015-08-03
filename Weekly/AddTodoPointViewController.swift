@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AddTodoPointViewController: UIViewController {
+class AddTodoPointViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var todoTitleTextField: UITextField!
     @IBOutlet weak var todoTypeSegmentedControl: UISegmentedControl!
@@ -22,6 +22,8 @@ class AddTodoPointViewController: UIViewController {
         
         // UI
         initSaveButton()
+        
+        todoTitleTextField.delegate = self
     }
     
     func initSaveButton() {
@@ -65,4 +67,11 @@ class AddTodoPointViewController: UIViewController {
             print(error)
         }
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        todoTitleTextField.resignFirstResponder()
+        
+        return true
+    }
+    
 }
